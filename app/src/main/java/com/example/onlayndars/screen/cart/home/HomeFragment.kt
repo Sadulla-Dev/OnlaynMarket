@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.onlayndars.R
 import com.example.onlayndars.api.Api
 import com.example.onlayndars.model.BaseResposne
+import com.example.onlayndars.model.CategoryModel
 import com.example.onlayndars.model.OfferModel
+import com.example.onlayndars.view.CategoryAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -34,6 +37,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
+
+        recyclerviewCategory.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL, false)
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("http://osonsavdo.sd-group.uz/api/")
@@ -60,6 +68,24 @@ class HomeFragment : Fragment() {
 
             override fun onFailure(call: Call<BaseResposne<List<OfferModel>>>, t: Throwable) {
                 Toast.makeText(requireActivity(), t.localizedMessage, Toast.LENGTH_LONG).show()
+            }
+        })
+
+
+        api.getCategories().enqueue(object : Callback<BaseResposne<List<CategoryModel>>>{
+            override fun onResponse(
+                call: Call<BaseResposne<List<CategoryModel>>>,
+                response: Response<BaseResposne<List<CategoryModel>>>) {
+
+                if (response.isSuccessful && response.body()!!.success){
+                    recyclerviewCategory.adapter = CategoryAdapter(response.body()?.data ?: emptyList())
+                }else{
+                    Toast.makeText(requireActivity(), response.body()?.message, Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResposne<List<CategoryModel>>>, t: Throwable) {
+                Toast.makeText(requireActivity(), t.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         })
 
