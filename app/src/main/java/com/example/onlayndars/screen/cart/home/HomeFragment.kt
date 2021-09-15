@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.onlayndars.R
@@ -13,7 +15,9 @@ import com.example.onlayndars.api.Api
 import com.example.onlayndars.model.BaseResposne
 import com.example.onlayndars.model.CategoryModel
 import com.example.onlayndars.model.OfferModel
+import com.example.onlayndars.screen.cart.MainViewModel
 import com.example.onlayndars.view.CategoryAdapter
+import com.example.onlayndars.view.ProductAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +28,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class HomeFragment : Fragment() {
     var offers: List<OfferModel> = emptyList()
+    lateinit var viewModel: MainViewModel
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
 
     override fun onCreateView(
@@ -38,58 +49,38 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
         recyclerviewCategory.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL, false)
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://osonsavdo.sd-group.uz/api/")
-            .build()
+        recyclerviewProduct.layoutManager = LinearLayoutManager(requireActivity())
 
-        val api = retrofit.create(Api::class.java)
 
-        api.getOffers().enqueue(object : Callback<BaseResposne<List<OfferModel>>>{
-            override fun onResponse(
-                call: Call<BaseResposne<List<OfferModel>>>,
-                response: Response<BaseResposne<List<OfferModel>>>) {
 
-                if (response.isSuccessful && response.body()!!.success){
-                    offers = response.body()!!.data
-                    carouselView.setImageListener { position, imageView ->
-                        Glide.with(imageView).load("http://osonsavdo.sd-group.uz/images/${offers[position].image}").into(imageView)
-                    }
 
-                    carouselView.pageCount = offers.count()
-                }else{
-                    Toast.makeText(requireActivity(), response.body()?.message, Toast.LENGTH_LONG).show()
-                }
+        viewModel.error.observe(requireActivity(), Observer {
+            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+        })
+        viewModel.offerData.observe(requireActivity(), Observer {
+            carouselView.setImageListener { position, imageView ->
+                Glide.with(imageView).load("http://osonsavdo.sd-group.uz/images/${it[position].image}").into(imageView)
             }
-
-            override fun onFailure(call: Call<BaseResposne<List<OfferModel>>>, t: Throwable) {
-                Toast.makeText(requireActivity(), t.localizedMessage, Toast.LENGTH_LONG).show()
-            }
+            carouselView.pageCount = it.count()
         })
 
-
-        api.getCategories().enqueue(object : Callback<BaseResposne<List<CategoryModel>>>{
-            override fun onResponse(
-                call: Call<BaseResposne<List<CategoryModel>>>,
-                response: Response<BaseResposne<List<CategoryModel>>>) {
-
-                if (response.isSuccessful && response.body()!!.success){
-                    recyclerviewCategory.adapter = CategoryAdapter(response.body()?.data ?: emptyList())
-                }else{
-                    Toast.makeText(requireActivity(), response.body()?.message, Toast.LENGTH_LONG).show()
-                }
-            }
-
-            override fun onFailure(call: Call<BaseResposne<List<CategoryModel>>>, t: Throwable) {
-                Toast.makeText(requireActivity(), t.localizedMessage, Toast.LENGTH_SHORT).show()
-            }
+        viewModel.categoriesData.observe( requireActivity(), Observer {
+           recyclerviewCategory.adapter = CategoryAdapter(it)
         })
 
+        viewModel.productsData.observe(requireActivity(), Observer {
+            recyclerviewProduct.adapter = ProductAdapter(it)
+        })
 
+        loadData()
+
+    }
+
+    fun loadData(){
+        viewModel.getOffers()
+        viewModel.getCattegories()
+        viewModel.getTopProducts()
     }
 
 
