@@ -17,6 +17,7 @@ import com.example.onlayndars.model.CategoryModel
 import com.example.onlayndars.model.OfferModel
 import com.example.onlayndars.screen.cart.MainViewModel
 import com.example.onlayndars.view.CategoryAdapter
+import com.example.onlayndars.view.CategoryAdapterCallBack
 import com.example.onlayndars.view.ProductAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import retrofit2.Call
@@ -36,7 +37,6 @@ class HomeFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,11 +49,22 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        swipes.setOnRefreshListener {
+            swipes.isRefreshing = true
+            loadData()
+        }
+
+
+
         recyclerviewCategory.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL, false)
-        recyclerviewProduct.layoutManager = LinearLayoutManager(requireActivity())
+        recyclerviewProduct.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
 
 
 
+        viewModel.progress.observe(requireActivity(), Observer {
+            swipes.isRefreshing = it
+        })
 
         viewModel.error.observe(requireActivity(), Observer {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
@@ -66,7 +77,11 @@ class HomeFragment : Fragment() {
         })
 
         viewModel.categoriesData.observe( requireActivity(), Observer {
-           recyclerviewCategory.adapter = CategoryAdapter(it)
+           recyclerviewCategory.adapter = CategoryAdapter(it,object: CategoryAdapterCallBack{
+               override fun onClickItem(item: CategoryModel) {
+                   viewModel.getProductsByCategory(item.id)
+               }
+           })
         })
 
         viewModel.productsData.observe(requireActivity(), Observer {

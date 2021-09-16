@@ -10,7 +10,11 @@ import com.example.onlayndars.R
 import com.example.onlayndars.model.CategoryModel
 import kotlinx.android.synthetic.main.category_item_layout.view.*
 
-class CategoryAdapter(val items: List<CategoryModel>): RecyclerView.Adapter<CategoryAdapter.ItemHolder>() {
+
+interface CategoryAdapterCallBack{
+    fun onClickItem(item:CategoryModel)
+}
+class CategoryAdapter(val items: List<CategoryModel>,val callBack: CategoryAdapterCallBack): RecyclerView.Adapter<CategoryAdapter.ItemHolder>() {
     class ItemHolder(view: View): RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
@@ -29,6 +33,7 @@ class CategoryAdapter(val items: List<CategoryModel>): RecyclerView.Adapter<Cate
             item.checked = true
             notifyDataSetChanged()
 
+            callBack.onClickItem(item)
         }
 
         if (item.checked){
