@@ -11,8 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.onlayndars.R
-import com.example.onlayndars.api.Api
-import com.example.onlayndars.model.BaseResposne
 import com.example.onlayndars.model.CategoryModel
 import com.example.onlayndars.model.OfferModel
 import com.example.onlayndars.screen.cart.MainViewModel
@@ -20,11 +18,6 @@ import com.example.onlayndars.view.CategoryAdapter
 import com.example.onlayndars.view.CategoryAdapterCallBack
 import com.example.onlayndars.view.ProductAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class HomeFragment : Fragment() {

@@ -6,14 +6,11 @@ import com.example.onlayndars.model.BaseResposne
 import com.example.onlayndars.model.CategoryModel
 import com.example.onlayndars.model.OfferModel
 import com.example.onlayndars.model.ProductModel
-import io.reactivex.Scheduler
+import com.example.onlayndars.model.request.GetProductsByIdsRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ShopRepository {
 
@@ -111,6 +108,32 @@ class ShopRepository {
 
                  override fun onError(e: Throwable) {
                      error.value = e.localizedMessage
+                 }
+
+                 override fun onComplete() {
+                 }
+             })
+         )
+     }
+    fun getProductsById(ids: List<Int>, error: MutableLiveData<String>, progress: MutableLiveData<Boolean>, success: MutableLiveData<List<ProductModel>>){
+        progress.value = true
+         compasiteDisposable.add(NetvorkManager
+             .getApiService().getProductsByIds(GetProductsByIdsRequest(ids))
+             .subscribeOn(Schedulers.io())
+             .observeOn(AndroidSchedulers.mainThread())
+             .subscribeWith(object : DisposableObserver<BaseResposne<List<ProductModel>>>(){
+                 override fun onNext(t: BaseResposne<List<ProductModel>>) {
+                     progress.value = false
+                     if (t.success) {
+                         success.value = t.data
+                     }else{
+                         error.value = t.message
+                     }
+                 }
+
+                 override fun onError(e: Throwable) {
+                     error.value = e.localizedMessage
+                     progress.value = true
                  }
 
                  override fun onComplete() {
