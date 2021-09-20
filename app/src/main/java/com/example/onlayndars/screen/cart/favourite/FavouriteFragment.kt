@@ -32,7 +32,7 @@ class FavouriteFragment : Fragment() {
         })
 
         viewMdel.progress.observe(this, Observer {
-            swipe.isRefreshing = it
+            swipeCart.isRefreshing = it
         })
     }
     override fun onCreateView(
@@ -46,7 +46,7 @@ class FavouriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerProduct.layoutManager = LinearLayoutManager(requireActivity())
-        swipe.setOnRefreshListener {
+        swipeCart.setOnRefreshListener {
             loadData()
         }
         loadData()
@@ -56,7 +56,7 @@ class FavouriteFragment : Fragment() {
     }
 
     companion object {
-
-        fun newInstance(param1: String, param2: String) = FavouriteFragment()
+        @JvmStatic
+        fun newInstance() = FavouriteFragment()
     }
 }

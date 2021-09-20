@@ -20,7 +20,7 @@ class ProfileFragment : Fragment() {
     }
 
     companion object {
-
-        fun newInstance(param1: String, param2: String) = ProfileFragment()
+        @JvmStatic
+        fun newInstance() = ProfileFragment()
     }
 }

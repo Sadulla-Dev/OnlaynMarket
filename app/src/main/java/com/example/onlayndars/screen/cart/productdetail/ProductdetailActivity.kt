@@ -2,6 +2,8 @@ package com.example.onlayndars.screen.cart.productdetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.onlayndars.R
 import com.example.onlayndars.model.ProductModel
@@ -35,6 +37,10 @@ class ProductdetailActivity : AppCompatActivity() {
         tvProductName.text = item.name
         tvProductPrice.text = item.price
 
+
+        if (PrefUtils.getCartCount(item) > 0){
+            btnAdd2Cart.visibility = View.GONE
+        }
         if (PrefUtils.checkFavorite(item)){
             imageFavorite.setImageResource(R.drawable.ic_heart)
         }else{
@@ -42,5 +48,13 @@ class ProductdetailActivity : AppCompatActivity() {
         }
 
         Glide.with(this).load(Constants.HOST_IMAGE + item.image).into(imgProduct)
+
+
+        btnAdd2Cart.setOnClickListener {
+            item.cartCount = 1
+            PrefUtils.setCart(item )
+            Toast.makeText(this, "Product added to cart!", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 }
