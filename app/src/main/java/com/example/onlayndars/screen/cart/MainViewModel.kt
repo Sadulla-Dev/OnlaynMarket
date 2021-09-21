@@ -2,10 +2,15 @@ package com.example.onlayndars.screen.cart
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.onlayndars.api.db.AppDatabase
 import com.example.onlayndars.api.repository.ShopRepository
 import com.example.onlayndars.model.CategoryModel
 import com.example.onlayndars.model.OfferModel
 import com.example.onlayndars.model.ProductModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel: ViewModel() {
 
@@ -31,6 +36,30 @@ class MainViewModel: ViewModel() {
     }
     fun getProductsByIds(ids: List<Int>) {
         repository.getProductsById(ids, error,progress,productsData)
+    }
+
+    fun insertAllProducts2DB(items:List<ProductModel>){
+        CoroutineScope(Dispatchers.IO).launch {
+            AppDatabase.getDataBase().getProductDao().insertAll(items)
+            AppDatabase.getDataBase().getProductDao().deleteAll()
+        }
+    }
+    fun insertAllCategories2DB(items:List<CategoryModel>){
+        CoroutineScope(Dispatchers.IO).launch {
+            AppDatabase.getDataBase().getCategoryDao().insatAll(items)
+            AppDatabase.getDataBase().getCategoryDao().deleteAll()
+        }
+    }
+
+    fun getAllDBProducts() {
+        CoroutineScope(Dispatchers.Main).launch {
+            productsData.value = withContext(Dispatchers.IO){AppDatabase.getDataBase().getProductDao() .getAllProducts()}
+        }
+    }
+    fun getAllDBCategories() {
+        CoroutineScope(Dispatchers.Main).launch {
+            categoriesData.value = withContext(Dispatchers.IO){AppDatabase.getDataBase().getCategoryDao().getAllCategories()}
+        }
     }
 
 }
