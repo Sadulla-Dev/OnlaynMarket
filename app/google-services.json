@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "335423700785",
+    "project_id": "o-nlayn-shop",
+    "storage_bucket": "o-nlayn-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335423700785:android:3944968f29cef2a59aba10",
+        "android_client_info": {
+          "package_name": "com.example.onlayndars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335423700785-s4dn03eagvuq5s38j5t7q638jgbu9k1o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCL77R8hpwAnS4LZZ5a7Ntg4am26IcmgEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335423700785-s4dn03eagvuq5s38j5t7q638jgbu9k1o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

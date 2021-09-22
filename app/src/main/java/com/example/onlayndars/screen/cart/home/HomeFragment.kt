@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         })
 
         viewModel.error.observe(requireActivity(), Observer {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "Qayta urinib ko'ring", Toast.LENGTH_SHORT).show()
         })
 
         viewModel.offerData.observe(requireActivity(), Observer {
