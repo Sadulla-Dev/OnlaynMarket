@@ -98,5 +98,4 @@ class HomeFragment : Fragment() {
         @JvmStatic
         fun newInstance() = HomeFragment()
     }
-
 }

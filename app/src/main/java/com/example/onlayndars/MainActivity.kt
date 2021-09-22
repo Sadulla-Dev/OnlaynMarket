@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             }else if (it.itemId == R.id.profileFragment){
                 supportFragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit()
                 activeFragment = profileFragment
+                Toast.makeText(this, "Vaqtinchalik bu qism faol emas!", Toast.LENGTH_SHORT).show()
             }
             return@setOnNavigationItemSelectedListener true
         }
