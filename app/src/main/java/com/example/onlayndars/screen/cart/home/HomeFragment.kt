@@ -35,7 +35,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -63,6 +62,7 @@ class HomeFragment : Fragment() {
         viewModel.error.observe(requireActivity(), Observer {
             Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         })
+
         viewModel.offerData.observe(requireActivity(), Observer {
             carouselView.setImageListener { position, imageView ->
                 Glide.with(imageView).load("http://osonsavdo.sd-group.uz/images/${it[position].image}").into(imageView)
@@ -83,7 +83,6 @@ class HomeFragment : Fragment() {
         })
 
         loadData()
-
     }
 
     fun loadData(){
@@ -99,4 +98,5 @@ class HomeFragment : Fragment() {
         @JvmStatic
         fun newInstance() = HomeFragment()
     }
+
 }

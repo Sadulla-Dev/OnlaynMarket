@@ -40,14 +40,14 @@ class MainViewModel: ViewModel() {
 
     fun insertAllProducts2DB(items:List<ProductModel>){
         CoroutineScope(Dispatchers.IO).launch {
-            AppDatabase.getDataBase().getProductDao().insertAll(items)
             AppDatabase.getDataBase().getProductDao().deleteAll()
+            AppDatabase.getDataBase().getProductDao().insertAll(items)
         }
     }
     fun insertAllCategories2DB(items:List<CategoryModel>){
         CoroutineScope(Dispatchers.IO).launch {
-            AppDatabase.getDataBase().getCategoryDao().insatAll(items)
             AppDatabase.getDataBase().getCategoryDao().deleteAll()
+            AppDatabase.getDataBase().getCategoryDao().insatAll(items)
         }
     }
 

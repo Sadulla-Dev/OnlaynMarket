@@ -29,10 +29,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel = MainViewModel()
+
         viewModel.productsData.observe(this, Observer {
             viewModel.insertAllProducts2DB(it)
-            homeFragment.loadData()
+
         })
+
         viewModel.categoriesData.observe(this, Observer {
             viewModel.insertAllCategories2DB(it)
         })
@@ -60,7 +62,6 @@ class MainActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().hide(activeFragment).show(profileFragment).commit()
                 activeFragment = profileFragment
             }
-
             return@setOnNavigationItemSelectedListener true
         }
         btnMenu.setOnClickListener {
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity() {
     fun loadData() {
         viewModel.getTopProducts()
         viewModel.getCattegories()
+        viewModel.getAllDBCategories()
     }
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleManager.setLocale(newBase))

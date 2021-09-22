@@ -37,6 +37,7 @@
                 android:layout_height="50dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardElevation="4dp"
+                android:visibility="invisible"
                 app:cardCornerRadius="16dp">
 
                 <ImageView
@@ -64,10 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:labelVisibilityMode="unlabeled"
-
                 android:background="@drawable/bottom_nav"
                 app:menu="@menu/bottom"/>
-
         </LinearLayout>
 
 

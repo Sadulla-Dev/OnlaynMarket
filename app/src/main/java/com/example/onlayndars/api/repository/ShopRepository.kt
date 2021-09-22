@@ -15,7 +15,8 @@ import io.reactivex.schedulers.Schedulers
 class ShopRepository {
 
     val compasiteDisposable = CompositeDisposable()
-     fun getOffers(error: MutableLiveData<String>, progress: MutableLiveData<Boolean>, success: MutableLiveData<List<OfferModel>>){
+
+    fun getOffers(error: MutableLiveData<String>, progress: MutableLiveData<Boolean>, success: MutableLiveData<List<OfferModel>>){
          progress.value = true
          compasiteDisposable.add(NetvorkManager
                  .getApiService().getOffers()
@@ -43,9 +44,7 @@ class ShopRepository {
 
 
      }
-
-
-     fun getCattegories(error: MutableLiveData<String>,success: MutableLiveData<List<CategoryModel>>){
+    fun getCattegories(error: MutableLiveData<String>,success: MutableLiveData<List<CategoryModel>>){
          compasiteDisposable.add(NetvorkManager
              .getApiService().getCategories()
              .subscribeOn(Schedulers.io())
@@ -68,8 +67,7 @@ class ShopRepository {
              })
          )
      }
-
-     fun getTopProducts(error: MutableLiveData<String>,success: MutableLiveData<List<ProductModel>>){
+    fun getTopProducts(error: MutableLiveData<String>,success: MutableLiveData<List<ProductModel>>){
          compasiteDisposable.add(NetvorkManager
              .getApiService().getTopProduct()
              .subscribeOn(Schedulers.io())
