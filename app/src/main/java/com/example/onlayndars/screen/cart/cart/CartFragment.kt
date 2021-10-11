@@ -35,7 +35,7 @@ class CartFragment : Fragment() {
         })
 
         viewModel.error.observe(this, Observer {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "Internet tekshiring!", Toast.LENGTH_SHORT).show()
         })
 
         viewModel.productsData.observe(this, Observer {

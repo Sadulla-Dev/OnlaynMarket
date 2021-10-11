@@ -53,7 +53,7 @@ class ProductdetailActivity : AppCompatActivity() {
         btnAdd2Cart.setOnClickListener {
             item.cartCount = 1
             PrefUtils.setCart(item)
-            Toast.makeText(this, "Product added to cart!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Mahsulot savatga qo'shildi!", Toast.LENGTH_SHORT).show()
             finish()
         }
     }
