@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -57,6 +58,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),LOCATION_REQUEST_CODE )
             return
+        }else{
+            Toast.makeText(this, "Joylashuvni yoqing!", Toast.LENGTH_SHORT).show()
         }
         mMap.isMyLocationEnabled = true
         fucusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->

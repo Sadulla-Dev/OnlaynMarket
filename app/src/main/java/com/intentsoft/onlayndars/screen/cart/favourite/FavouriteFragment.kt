@@ -28,7 +28,7 @@ class FavouriteFragment : Fragment() {
         })
 
         viewMdel.error.observe(this, Observer {
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), "Internet tekshiring!", Toast.LENGTH_SHORT).show()
         })
 
         viewMdel.progress.observe(this, Observer {

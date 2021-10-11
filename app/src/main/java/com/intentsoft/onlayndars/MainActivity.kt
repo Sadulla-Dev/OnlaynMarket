@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.error.observe(this, Observer {
-            Toast.makeText(this, it , Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Qayta urinib ko'ring" , Toast.LENGTH_SHORT).show()
         })
 
         supportFragmentManager.beginTransaction().add(R.id.flContainer, homeFragment, homeFragment.tag).hide(homeFragment).commit()

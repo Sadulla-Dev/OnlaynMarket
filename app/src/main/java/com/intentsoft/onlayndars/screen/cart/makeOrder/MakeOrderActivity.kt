@@ -36,9 +36,9 @@ import org.greenrobot.eventbus.Subscribe
         }
 
         btnMakeOrder.setOnClickListener {
-            if (edAddress == null){
+            if (edAddress.length() > 0){
                 Toast.makeText(this, "Mallumot ko'rilmoqda", Toast.LENGTH_SHORT).show()
-            }else if (edAddress != null) {
+            }else {
                 Toast.makeText(this, "Joyingizni kiriting", Toast.LENGTH_SHORT).show()
             }
 

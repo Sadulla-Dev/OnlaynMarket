@@ -88,8 +88,6 @@ class HomeFragment : Fragment() {
         viewModel.getOffers()
         viewModel.getAllDBProducts()
         viewModel.getAllDBCategories()
-//        viewModel.getCattegories()
-//        viewModel.getTopProducts()
     }
 
 
