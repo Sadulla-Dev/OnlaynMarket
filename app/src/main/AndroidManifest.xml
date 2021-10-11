@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.onlayndars">
+    package="com.intentsoft.onlayndars">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".App"
+        android:name="com.intentsoft.onlayndars.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,24 +21,24 @@
         android:theme="@style/Theme.OnlaynDars"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name="com.intentsoft.onlayndars.MainActivity"
             android:exported="true" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="com.intentsoft.onlayndars.MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".screen.cart.makeOrder.MakeOrderActivity"
+            android:name="com.intentsoft.onlayndars.screen.cart.makeOrder.MakeOrderActivity"
             android:exported="true" />
         <activity
-            android:name=".screen.cart.productdetail.ProductdetailActivity"
+            android:name="com.intentsoft.onlayndars.screen.cart.productdetail.ProductdetailActivity"
             android:exported="true" />
         <activity
-            android:name=".screen.cart.SplashActivity"
+            android:name="com.intentsoft.onlayndars.screen.cart.SplashActivity"
             tools:ignore="DuplicateActivity"
             android:exported="true">
 
@@ -49,7 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".services.AppFirebaseMessagingService"
+        <service android:name="com.intentsoft.onlayndars.services.AppFirebaseMessagingService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
